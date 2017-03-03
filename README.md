@@ -29,6 +29,8 @@ export ITIME_USER="test"
 export ITIME_DB_PASSWORD="password"
 ```
 
+Source this file or put these enviornment variables into `.profile` or equal.
+
 Then you should run `python3 main.py`
 And it should work ... probably!
 
