@@ -1,6 +1,7 @@
 from database import Database
-import os
 from account import Account
+from account_db_mapper import AccountDatabaseMapper
+import os
 
 def main():
     #fetch database credentials from env variables
@@ -10,9 +11,12 @@ def main():
     db = Database(db_name,db_user,db_password)
     db.connect()
 
-    account = Account(0,"herpa@derpa.com","123","30")
-    account.save(db)
+    account_db_mapper = AccountDatabaseMapper(db)
 
+
+    account = Account(0,"herpa@derpa.com","123","30")
+
+    account_db_mapper.save(account)
     print("Exiting...")
 
 
