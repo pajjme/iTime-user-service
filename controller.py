@@ -25,4 +25,3 @@ class Controller:
 
         #store a account inject the database
         self.acc_db_mapper.save(account)
-        print("Creating account in db")
