@@ -8,7 +8,9 @@ class Google:
         
     
     def generate_oauth(self,auth_code):
-        oauth = client.credentials_from_clientsecrets_and_code(self.secret_file,['profile', 'email'],auth_code)
+        oauth = client.credentials_from_clientsecrets_and_code(self.secret_file,
+                ['profile', 'email'],auth_code)
+
         self.credentials = oauth
     
     def get_access_token(self):
