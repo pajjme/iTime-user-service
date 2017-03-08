@@ -42,7 +42,8 @@ CREATE TABLE accounts (
     id integer NOT NULL,
     email text NOT NULL,
     google_access_token text NOT NULL,
-    google_refresh_token text NOT NULL
+    google_refresh_token text NOT NULL,
+    google_id text NOT NULL
 );
 
 
@@ -82,6 +83,14 @@ ALTER TABLE ONLY accounts ALTER COLUMN id SET DEFAULT nextval('accounts_id_seq':
 
 ALTER TABLE ONLY accounts
     ADD CONSTRAINT accounts_email_key UNIQUE (email);
+
+
+--
+-- Name: accounts accounts_google_id_key; Type: CONSTRAINT; Schema: public; Owner: david
+--
+
+ALTER TABLE ONLY accounts
+    ADD CONSTRAINT accounts_google_id_key UNIQUE (google_id);
 
 
 --
