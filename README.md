@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/pajjme/iTime-user-service.svg?branch=master)](https://travis-ci.org/pajjme/iTime-user-service)
 # iTime-user-service
 User service for iTime.
 
