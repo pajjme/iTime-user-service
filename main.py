@@ -3,6 +3,7 @@ from account import Account
 from account_db_mapper import AccountDatabaseMapper
 from controller import Controller
 from google import Google
+from amqp_server import AmqpServer
 import os
 
 def main():
@@ -19,6 +20,14 @@ def main():
     google_api_file = os.environ["ITIME_GOOGLE_API_FILE"]
     google = Google(google_api_file)
 
+
+    #Config for rabbitmq
+    rabbit_server   = os.environ["ITIME_RABBIT_SERVER"]
+    rabbit_queue    = os.environ["ITIME_RABBIT_US_QUEUE"]
+    
+    rabbit = AmqpServer(rabbit_server,rabbit_queue,dummy)
+    rabbit.start()
+
     #Temporary asking for auth code via stdin
     auth_code = input("auth code\n")
 
@@ -27,7 +36,8 @@ def main():
 
     print("Exiting...")
 
-
+def dummy(body):
+        print(body)
 
 if __name__ == '__main__':
     main()
