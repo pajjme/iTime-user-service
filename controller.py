@@ -8,6 +8,18 @@ class Controller:
        self.account_db_mapper = AccountDatabaseMapper(database)
 
 
+    def incoming(self,body):
+        #handles new rpc calls
+        auth_code = body.decode()
+        print(auth_code)
+        try:
+           self.new_account(auth_code)
+           return True
+        except Exception as e:
+            print(e)
+            return False
+
+
     def new_account(self,auth_code):
         #call google to get new tokens
         self.google.generate_oauth(auth_code)
