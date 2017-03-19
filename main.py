@@ -6,6 +6,7 @@ from google import Google
 from amqp_server import AmqpServer
 import os
 
+
 def main():
     
     #fetch database credentials from env variables
@@ -20,24 +21,15 @@ def main():
     google_api_file = os.environ["ITIME_GOOGLE_API_FILE"]
     google = Google(google_api_file)
 
+    controller = Controller(db,google)
 
     #Config for rabbitmq
     rabbit_server   = os.environ["ITIME_RABBIT_SERVER"]
     rabbit_queue    = os.environ["ITIME_RABBIT_US_QUEUE"]
-    
-    rabbit = AmqpServer(rabbit_server,rabbit_queue,dummy)
+
+    rabbit = AmqpServer(rabbit_server,rabbit_queue,controller.incoming)
     rabbit.start()
-
-    #Temporary asking for auth code via stdin
-    auth_code = input("auth code\n")
-
-    controller = Controller(db,google)
-    controller.new_account(auth_code)
-
     print("Exiting...")
-
-def dummy(body):
-        print(body)
 
 if __name__ == '__main__':
     main()
