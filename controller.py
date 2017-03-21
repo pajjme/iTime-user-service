@@ -1,4 +1,5 @@
 import base64
+import json
 from account import Account
 from account_db_mapper import AccountDatabaseMapper
 class Controller:
@@ -11,7 +12,8 @@ class Controller:
 
     def incoming(self,body):
         #handles new rpc calls
-        auth_code = base64.b64decode(body).decode("utf-8")
+        request_body = base64.b64decode(body).decode("utf-8")
+        auth_code = json.loads(request_body)['auth_code']
         print(auth_code)
         try:
            self.new_account(auth_code)
