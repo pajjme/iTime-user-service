@@ -26,3 +26,4 @@ class Controller:
 
         #Store account 
         self.account_db_mapper.save(account)
+

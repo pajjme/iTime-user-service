@@ -8,8 +8,14 @@ class Database:
         self.connection = None
 
     def connect(self):
-        self.connection = psycopg2.connect("dbname="+self.db_name+" user="+self.user)
-        self.cursor = self.connection.cursor()
+        try:
+            self.connection = psycopg2.connect("dbname="+self.db_name+" user="+self.user)
+            self.cursor = self.connection.cursor()
+            return True
+        except psycopg2.Error as error:
+            print ("psycopg2 error: ", error)
+            return False
+        
 
     def disconnect():
         self.cursor.close()
