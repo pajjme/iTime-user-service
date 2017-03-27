@@ -26,3 +26,14 @@ class Google:
     
     def get_id(self):
         return self.credentials.id_token['sub']
+
+    #makes a new calender in google.
+    def make_new_calendar(self):
+        http = credentials.authorize(httplib2.Http())
+        service = discovery.build('calendar', 'v3', http=http)
+        calendar_body = {
+            'summary' : 'iTime-Calendar-0001'
+            'timeZone' : 'Europe/Stockholm'
+        }
+        self.calendar_Id = service.calendars().insert(body = calendar_body).execute()
+
