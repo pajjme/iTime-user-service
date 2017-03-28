@@ -8,8 +8,7 @@ import os
 
 
 def main():
-    
-    test = 4/0
+
     #fetch database credentials from env variables
     db_name = os.environ["ITIME_DB"]
     db_user = os.environ["ITIME_DB_USER"]
