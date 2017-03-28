@@ -12,7 +12,8 @@ class Controller:
 
     def incoming(self,body):
         #handles new rpc calls
-        request_body = base64.b64decode(body).decode("utf-8")
+        print(body)
+        request_body = body.decode("utf-8")
         auth_code = json.loads(request_body)['auth_code']
         print(auth_code)
         try:
