@@ -23,8 +23,6 @@ class Controller:
                         email,
                         access_token,
                         refresh_token)
-        #create new calendar
-        calendar_id = self.google.make_new_calendar()
+
         #Store account 
         self.account_db_mapper.save(account)
-
