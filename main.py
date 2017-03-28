@@ -3,8 +3,6 @@ from account import Account
 from account_db_mapper import AccountDatabaseMapper
 from controller import Controller
 from google import Google
-import time
-import sys
 import os
 
 def main():
@@ -15,14 +13,7 @@ def main():
     db_password = os.environ["ITIME_DB_PASSWORD"]
 
     db = Database(db_name,db_user,db_password)
-    i = 0
-    #Try catch block
-    while(not db.connect()):
-        time.sleep(5)
-        if(i >= 5):
-            sys.exit()
-        i += 1
-
+    db.connect()
 
     #fetch google client secret file path
     google_api_file = os.environ["ITIME_GOOGLE_API_FILE"]
