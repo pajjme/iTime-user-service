@@ -9,7 +9,7 @@ User service for iTime.
 * Python 3
 * pip3 
 * postgres
-
+* rabbitmq
 
 
 Install the python packages that are used:
@@ -28,9 +28,15 @@ For example:
 export ITIME_DB="test_db"
 export ITIME_USER="test"
 export ITIME_DB_PASSWORD="password"
+export ITIME_GOOGLE_API_FILE="secret.json"
+export ITIME_RABBIT_SERVER="localhost"
+export ITIME_RABBIT_US_QUEUE="a_queue"
 ```
 
 Source this file or put these enviornment variables into `.profile` or equal.
+
+Start up the message broker, rabbitmq.
+
 
 Then you should run `python3 main.py`
 And it should work ... probably!

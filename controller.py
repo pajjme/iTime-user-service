@@ -1,3 +1,5 @@
+import base64
+import json
 from account import Account
 from account_db_mapper import AccountDatabaseMapper
 class Controller:
@@ -6,6 +8,19 @@ class Controller:
        self.database = database
        self.google = google
        self.account_db_mapper = AccountDatabaseMapper(database)
+
+
+    def incoming(self,body):
+        #handles new rpc calls
+        request_body = base64.b64decode(body).decode("utf-8")
+        auth_code = json.loads(request_body)['auth_code']
+        print(auth_code)
+        try:
+           self.new_account(auth_code)
+           return True
+        except Exception as e:
+            print(e)
+            return False
 
 
     def new_account(self,auth_code):
