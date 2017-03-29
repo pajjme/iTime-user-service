@@ -19,7 +19,7 @@ def main():
     db = Database(db_name,db_user,db_password)
     connection_tries = 0
 
-    #try to connect 5 times before closing the app
+    #try to establish db connection, quit if it fails
     while(not db.connect()):
         print("Trying to reconnect to db,try starting postgres")
         time.sleep(5)
