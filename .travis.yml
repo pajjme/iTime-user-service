@@ -4,6 +4,7 @@ python: "3.6"
 install: "pip install -r requirements.txt"
 #command to run tests
 script:
+ - python -m py_compile main.py
  - source .env_example
  - python3 main.py
  - python3 -m unittest *_test.py
