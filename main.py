@@ -5,6 +5,8 @@ from controller import Controller
 from google import Google
 from amqp_server import AmqpServer
 import os
+import time
+import sys
 
 
 def main():
@@ -15,7 +17,15 @@ def main():
     db_password = os.environ["ITIME_DB_PASSWORD"]
 
     db = Database(db_name,db_user,db_password)
-    db.connect()
+    connection_tries = 0
+
+    #try to connect 5 times before closing the app
+    while(not db.connect()):
+        print("Trying to reconnect to db,try starting postgres")
+        time.sleep(5)
+        if(connection_tries > 1):
+            sys.exit(0)
+        connection_tries+=1
 
     #fetch google client secret file path
     google_api_file = os.environ["ITIME_GOOGLE_API_FILE"]
