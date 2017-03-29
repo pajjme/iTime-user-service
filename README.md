@@ -1,17 +1,18 @@
 [![Build Status](https://travis-ci.org/pajjme/iTime-user-service.svg?branch=master)](https://travis-ci.org/pajjme/iTime-user-service)
+
 # iTime-user-service
 User service for iTime.
+Microservice that is responsible for user accounts. 
+Both storing user infromation in db as well as handling session tokens.
 
-
-
-#First time setup
-##Dependencies
+## Dependencies
 * Python 3
 * pip3 
 * postgres
 * rabbitmq
 
 
+# First time setup
 Install the python packages that are used:
 ```pip3 install -r /path/to/requirements.txt```
 
