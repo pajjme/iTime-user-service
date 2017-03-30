@@ -1,14 +1,19 @@
-import base64
 import json
+import util
+import psycopg2
 from account import Account
+from session import Session
 from account_db_mapper import AccountDatabaseMapper
+from session_db_mapper import SessionDatabaseMapper
+ 
 class Controller:
 
     def __init__(self,database,google):
-       self.database = database
-       self.google = google
-       self.account_db_mapper = AccountDatabaseMapper(database)
-
+        self.database = database
+        self.google = google
+        self.account_db_mapper = AccountDatabaseMapper(database)
+        self.session_db_mapper = SessionDatabaseMapper(database)
+    
 
     def incoming(self,body):
         #handles new rpc calls
@@ -39,6 +44,22 @@ class Controller:
                         email,
                         access_token,
                         refresh_token)
-
-        #Store account 
-        self.account_db_mapper.save(account)
+        
+        #Generate a session key
+        session_key = util.generate_random_session_key()
+        
+        #Create a new Session
+        session = Session(session_key,account.id)
+        
+        try:
+            #Store account 
+            self.account_db_mapper.save(account)
+            
+            #Store session key 
+            self.session_db_mapper.save(session)
+            
+            self.database.commit()
+        except psycopg2.DatabaseError as error:
+            if self.database.connection:
+                self.database.rollback()
+            print("Error:", error)

@@ -15,6 +15,13 @@ class Database:
         except psycopg2.Error as error:
             print ("psycopg2 error: ", error)
             return False
-    def disconnect():
+    def disconnect(self):
         self.cursor.close()
         self.connection.close()
+
+    def commit(self): 
+        self.connection.commit()
+
+    def rollback(self):
+        self.connection.rollback()
+
