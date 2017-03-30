@@ -21,14 +21,25 @@ class Controller:
         request_body = body.decode("utf-8")
         auth_code = json.loads(request_body)['auth_code']
         print(auth_code)
+
+
         try:
-           self.new_account(auth_code)
-           return True
-        except Exception as e:
-            print(e)
+            
+            id = self.new_account(auth_code)
+            
+            self.add_session_key(id)
+            
+            self.database.commit()
+            
+            return True
+        except Exception as error:
+            if self.database.connection:
+                self.database.rollback()
+            print("Error:", error) 
+
             return False
 
-
+    
     def new_account(self,auth_code):
         #call google to get new tokens
         self.google.generate_oauth(auth_code)
@@ -45,24 +56,10 @@ class Controller:
                         access_token,
                         refresh_token)
         
-        try:
-            #Store account 
-            self.account_db_mapper.save(account)
-            
-            self.add_session_key(account.id)
-            
-            self.database.commit()
-        except psycopg2.DatabaseError as error:
-            if self.database.connection:
-                self.database.rollback()
-            print("Error:", error)
+        #Store account 
+        self.account_db_mapper.insert(account)
+        return account.id
 
-
-    #######################################################
-    #                                                     #     
-    # Will not commit, you need to do that yourself after #
-    #                                                     #
-    #######################################################
     def add_session_key(self,google_id): 
 
         #Generate a session key
@@ -72,4 +69,4 @@ class Controller:
         session = Session(session_key,google_id)
 
         #Store session key 
-        self.session_db_mapper.save(session)
+        self.session_db_mapper.insert(session)
