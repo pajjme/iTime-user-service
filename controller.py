@@ -45,21 +45,31 @@ class Controller:
                         access_token,
                         refresh_token)
         
-        #Generate a session key
-        session_key = util.generate_random_session_key()
-        
-        #Create a new Session
-        session = Session(session_key,account.id)
-        
         try:
             #Store account 
             self.account_db_mapper.save(account)
             
-            #Store session key 
-            self.session_db_mapper.save(session)
+            self.add_session_key(account.id)
             
             self.database.commit()
         except psycopg2.DatabaseError as error:
             if self.database.connection:
                 self.database.rollback()
             print("Error:", error)
+
+
+    #######################################################
+    #                                                     #     
+    # Will not commit, you need to do that yourself after #
+    #                                                     #
+    #######################################################
+    def add_session_key(self,google_id): 
+
+        #Generate a session key
+        session_key = util.generate_random_session_key()
+        
+        #Create a new Session
+        session = Session(session_key,google_id)
+
+        #Store session key 
+        self.session_db_mapper.save(session)
