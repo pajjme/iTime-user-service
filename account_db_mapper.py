@@ -11,5 +11,4 @@ class AccountDatabaseMapper:
             (account.id,account.email,account.access_token,account.refresh_token)
         )
 
-        self.db.connection.commit()
 
