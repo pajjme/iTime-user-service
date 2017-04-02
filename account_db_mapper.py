@@ -3,7 +3,7 @@ class AccountDatabaseMapper:
     def __init__(self,db):
         self.db = db
 
-    def save(self,account):
+    def insert(self,account):
         self.db.cursor.execute(
             "INSERT INTO accounts "+
             "(google_id,email,google_access_token,google_refresh_token) " +
@@ -11,5 +11,4 @@ class AccountDatabaseMapper:
             (account.id,account.email,account.access_token,account.refresh_token)
         )
 
-        self.db.connection.commit()
 
