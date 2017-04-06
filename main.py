@@ -13,10 +13,11 @@ def main():
 
     #fetch database credentials from env variables
     db_name = os.environ["ITIME_DB"]
+    db_host = os.environ["ITIME_DB_HOST"]
     db_user = os.environ["ITIME_DB_USER"]
     db_password = os.environ["ITIME_DB_PASSWORD"]
 
-    db = Database(db_name,db_user,db_password)
+    db = Database(db_host,db_name,db_user,db_password)
     connection_tries = 0
 
     #try to establish db connection, quit if it fails
