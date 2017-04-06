@@ -1,4 +1,5 @@
 import pika
+from time import sleep
 
 class AmqpServer:
 
@@ -6,8 +7,17 @@ class AmqpServer:
         
         self.procedure = procedure
 
-        self.connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=server))
+        connected = False
+        while not connected:
+            try:
+                self.connection = pika.BlockingConnection(
+                        pika.ConnectionParameters(host=server))
+                connected = True
+                print("Connected to rabbitmq")
+            except:
+                print("No connection to rabbitmq yet")
+                sleep(5)
+
 
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue = request_queue)
