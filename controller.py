@@ -26,18 +26,17 @@ class Controller:
         try:
             
             id = self.new_account(auth_code)
-            
             self.add_session_key(id)
-            
             self.database.commit()
             
-            return True
+            obj = {'session_token':"",'code':0,'error':""}
+            return json.dumps(obj)
         except Exception as error:
             if self.database.connection:
                 self.database.rollback()
             print("Error:", error) 
-
-            return False
+            obj = {'session_token':"",'code':1,'error':str(error)}
+            return json.dumps(obj)
 
     
     def new_account(self,auth_code):
